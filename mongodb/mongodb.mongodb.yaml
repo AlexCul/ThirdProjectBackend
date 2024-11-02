@@ -1,0 +1,35 @@
+apiVersion: mongodb.com/v1
+kind: MongoDB
+metadata:
+  name: my-sharded-cluster
+  namespace: third-project
+spec:
+  members: 3                 # Количество реплик в каждом шарде
+  type: Sharded
+  shardCount: 2              # Количество шардов
+  version: 6.0.5
+  security:
+    authentication:
+      modes: ["SCRAM"]       # Включает аутентификацию
+  users:                      # Создаёт пользователя для подключения
+    - name: myUser
+      db: admin
+      passwordSecretRef:
+        name: my-user-password
+      roles:
+        - name: readWrite
+          db: myDatabase
+  statefulSet:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: mongod
+              resources:
+                requests:
+                  memory: "512Mi"
+                  cpu: "250m"
+                limits:
+                  memory: "1Gi"
+                  cpu: "500m"
+
