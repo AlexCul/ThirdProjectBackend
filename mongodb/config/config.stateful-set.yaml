@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo-config
+  namespace: third-project
+spec:
+  serviceName: mongo-config
+  replicas: 3
+  selector:
+    matchLabels:
+      role: mongo-config
+  template:
+    metadata:
+      labels:
+        role: mongo-config
+    spec:
+      containers:
+      - name: mongo
+        image: mongo:latest
+        command: ["mongod", "--configsvr", "--replSet", "configReplSet", "--bind_ip_all"]
+        ports:
+        - containerPort: 27017
