@@ -1,10 +1,11 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: StatefulSet
 metadata:
-  name: redis
+  name: redis-cluster
   namespace: third-project
 spec:
-  replicas: 1
+  serviceName: redis
+  replicas: 3
   selector:
     matchLabels:
       app: redis
@@ -22,6 +23,13 @@ spec:
         - name: redis-config
           mountPath: /usr/local/etc/redis
           subPath: redis.conf
+        args:
+          - "--port"
+          - "6379"
+          - "--cluster-enabled"
+          - "yes"
+          - "--cluster-node-timeout"
+          - "5000"
       volumes:
       - name: redis-config
         configMap:
