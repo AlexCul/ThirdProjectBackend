@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: minio
+  namespace: third-project
+  labels:
+    app: minio
+spec:
+  containers:
+    - name: minio
+      image: minio/minio
+      args: ["server", "/mnt/minio"]
