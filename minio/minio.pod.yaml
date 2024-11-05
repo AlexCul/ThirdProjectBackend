@@ -10,3 +10,11 @@ spec:
     - name: minio
       image: minio/minio
       args: ["server", "/mnt/minio"]
+      ports:
+        - containerPort: 9000
+      volumeMounts:
+        - name: minio-storage
+          mountPath: "/mnt/minio"
+  volumes:
+    - name: minio-storage
+      emptyDir: {}
