@@ -6,10 +6,10 @@ metadata:
   labels:
     app: scylla
 spec:
+  hostname: scylladb
   containers:
     - name: scylla
       image: scylladb/scylla
       args: ["--smp", "1"]
-      hostname: scylladb
       ports:
         - containerPort: 9042
