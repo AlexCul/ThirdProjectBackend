@@ -10,6 +10,6 @@ spec:
   containers:
     - name: scylla
       image: scylladb/scylla
-      args: ["--smp", "1"]
+      args: ["--smp", "1", "-d"]
       ports:
         - containerPort: 9042
