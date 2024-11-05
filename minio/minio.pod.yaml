@@ -9,12 +9,12 @@ spec:
   containers:
     - name: minio
       image: minio/minio
-      args: ["server", "/mnt/minio"]
+      args: ["server", "/home/genetic152/minio"]
       ports:
         - containerPort: 9000
       volumeMounts:
         - name: minio-storage
-          mountPath: "/mnt/minio"
+          mountPath: "/home/genetic152/minio"
   volumes:
     - name: minio-storage
       emptyDir: {}
