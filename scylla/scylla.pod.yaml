@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: some-scylla
+  labels:
+    app: scylla
+spec:
+  containers:
+    - name: scylla
+      image: scylladb/scylla
+      args: ["--smp", "1"]
+      hostname: scylladb
+      ports:
+        - containerPort: 9042
