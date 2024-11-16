@@ -1,0 +1,8 @@
+type Greetings {
+    polite: String!
+    friendly: String!
+}
+
+type Query {
+    greetings: Greetings!
+}
