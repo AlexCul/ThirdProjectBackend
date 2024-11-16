@@ -1,20 +1,16 @@
-var express = require("express")
-var { createHandler } = require("graphql-http/lib/use/express")
-var { buildSchema } = require("graphql")
- 
-var fs = require("fs")
+import { resolvers } from "./graphql/resolvers.js"
 
-var text = fs.readFileSync("./schema.graphql", "utf8")
+import express from "express";
+import { createHandler } from "graphql-http/lib/use/express";
+import { buildSchema } from "graphql";
+import * as fs from "fs";
+
+import { ruruHTML } from "ruru/server";
+
+var text = fs.readFileSync("./graphql/schema.graphql", "utf8")
 
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(text)
- 
-// The root provides a resolver function for each API endpoint
-var root = {
-  hello() {
-    return "Hello world!"
-  },
-}
  
 var app = express()
  
@@ -23,15 +19,13 @@ app.all(
   "/graphql",
   createHandler({
     schema: schema,
-    rootValue: root,
+    rootValue: resolvers,
   })
 )
  
 // Start the server at port
 app.listen(4000)
 
-var { ruruHTML } = require("ruru/server")
- 
 // Serve the GraphiQL IDE.
 app.get("/", (_req, res) => {
   res.type("html")
