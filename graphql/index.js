@@ -2,12 +2,12 @@ var express = require("express")
 var { createHandler } = require("graphql-http/lib/use/express")
 var { buildSchema } = require("graphql")
  
+var fs = require("fs")
+
+var text = fs.readFileSync("./schema.graphql", "utf8")
+
 // Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
-  type Query {
-    hello: String
-  }
-`)
+var schema = buildSchema(text)
  
 // The root provides a resolver function for each API endpoint
 var root = {
